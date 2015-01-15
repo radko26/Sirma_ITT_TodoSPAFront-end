@@ -1,0 +1,22 @@
+ <table class="table table-striped table-hover table-bordered " id="taskTable">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Task description</th>
+      <th>Expiry date</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody id="taskTableBody">
+    <tr ng-repeat="task in table" success-Directive task="task">
+      <td id="taskId">{{task.id}}</td>
+      <td id="taskContent">{{task.content}}</td>
+      <td date-Directive task="task" id="taskExpiryDate"></td>
+      <td>
+        <button class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="isFinished(task)"
+          ng-click="markAsFinished(task)" id="taskFinishButton"></button>
+        <button class="glyphicon glyphicon-trash" id="taskRemoveButton" aria-hidden="true" ng-click="deleteTask(task)"></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
