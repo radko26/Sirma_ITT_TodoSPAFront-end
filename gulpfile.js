@@ -12,6 +12,7 @@ clean = require('gulp-clean'),
 jshint = require('gulp-jshint'),
 stylish = require('jshint-stylish'),
 program = require('commander'),
+sonar = require('gulp-sonar'),
 debug = false,
 WATCH_MODE = 'watch',
 RUN_MODE = 'run',
@@ -158,6 +159,39 @@ gulp.task('watch-mode', function() {
   imageWatcher.on('change', changeNotification);
   testWatcher.on('change', changeNotification);
 });
+
+gulp.task('sonar', function () {
+    var options = {
+        sonar: {
+            host: {
+                url: 'http://localhost:9000'
+            },
+            jdbc: {
+                url: 'jdbc:h2:tcp://localhost:9092/sonar',
+                username: 'sonar',
+                password: 'sonar'
+            },
+            projectKey: 'sonar:task-ui:1.1.0',
+            projectName: 'TaskUI',
+            projectVersion: '1.1.0',
+            sources: 'src/js',
+            language: 'js',
+            sourceEncoding: 'UTF-8',
+            javascript: {
+                lcov: {
+                    reportPath: 'test/sonar_report/lcov.info'
+                }
+            }
+        }
+    };
+
+    // gulp source doesn't matter, all files are referenced in options object above
+    return gulp.src('thisFileDoesNotExist.js', { read: false })
+        .pipe(sonar(options))
+        .on('error', util.log);
+});
+
+
 
 
 gulp.task('build', ['css', 'js','lint','image','template', 'index','lib']);
