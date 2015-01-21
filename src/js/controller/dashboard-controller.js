@@ -18,7 +18,7 @@ define(
       'todoApp.grid-directive',
       'todoApp.global-service',
       'todoApp.tasks-service',
-      'todoApp.success-directive',
+      'todoApp.success-directive'
 
       ])
     .controller('DashboardController', [
